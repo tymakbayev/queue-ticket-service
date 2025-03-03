@@ -1,0 +1,185 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+.pnpm-debug.log
+.npm
+.yarn
+.pnp.*
+.yarn-integrity
+.eslintcache
+.node_repl_history
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.*.local
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+.nyc_output
+
+# Dependency directories
+jspm_packages/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional stylelint cache
+.stylelintcache
+
+# dotenv environment variable files
+.env
+.env.test
+.env.production
+
+# Stores VSCode versions used for testing VSCode extensions
+.vscode-test
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# IDE - JetBrains
+.idea/
+*.iml
+*.iws
+*.ipr
+.idea_modules/
+out/
+
+# IDE - Eclipse
+.project
+.classpath
+.settings/
+.metadata
+
+# IDE - Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# IDE - Atom
+.atom/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# Redis dump file
+dump.rdb
+*.rdb
+
+# Docker data
+redis-data/
+prometheus-data/
+grafana-data/
+
+# Build directories
+dist/
+build/
+out/
+.next/
+
+# Temporary files
+tmp/
+temp/
+
+# Misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Project specific
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Husky
+.husky/_
+
+# Debug files
+debug.log
+debug/
+
+# Local configuration files
+config.local.js
+local.config.js
+
+# Generated documentation
+docs/generated/
+apidoc/
+
+# Test results
+test-results/
+junit.xml
+report.*.json
+
+# Dependency lock files (keep package-lock.json for npm)
+# Uncomment if using yarn or pnpm exclusively
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+
+# Redis Commander data
+redis-commander-data/
+
+# Prometheus & Grafana
+prometheus-data/
+grafana-data/
