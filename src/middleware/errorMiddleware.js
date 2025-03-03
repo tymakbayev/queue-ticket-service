@@ -1,20 +1,20 @@
 /**
  * Error handling middleware for the Queue Ticket Service
- * 
+ *
  * This middleware catches all errors thrown during request processing
  * and formats them into a consistent response format.
- * 
+ *
  * It handles different types of errors:
  * - Validation errors (from Joi)
  * - Custom application errors
  * - Database/storage errors
  * - Unexpected errors
- * 
+ *
  * Each error type is mapped to an appropriate HTTP status code
  * and a standardized error response format.
  */
 
-const { ValidationError } = require('joi');
+const ValidationError = require('joi');
 
 /**
  * Custom error classes that may be thrown by the application
@@ -48,7 +48,7 @@ class ConflictError extends AppError {
 
 /**
  * Main error handling middleware
- * 
+ *
  * @param {Error} err - The error object
  * @param {Object} req - Express request object
  * @param {Object} res - Express response object
@@ -57,13 +57,13 @@ class ConflictError extends AppError {
 function errorMiddleware(err, req, res, next) {
   // Get logger from request (attached in loggerMiddleware)
   const logger = req.logger || console;
-  
+
   // Default error values
   let statusCode = 500;
   let errorMessage = 'Internal Server Error';
   let errorDetails = null;
   let errorCode = 'INTERNAL_ERROR';
-  
+
   // Handle Joi validation errors
   if (err instanceof ValidationError) {
     statusCode = 400;
@@ -74,11 +74,11 @@ function errorMiddleware(err, req, res, next) {
       type: detail.type
     }));
     errorCode = 'VALIDATION_ERROR';
-    
-    logger.warn(`Validation error: ${err.message}`, { 
-      path: req.path, 
+
+    logger.warn(`Validation error: ${err.message}`, {
+      path: req.path,
       method: req.method,
-      details: errorDetails 
+      details: errorDetails
     });
   }
   // Handle custom application errors
@@ -86,9 +86,9 @@ function errorMiddleware(err, req, res, next) {
     statusCode = err.statusCode;
     errorMessage = err.message;
     errorCode = err.name.replace('Error', '').toUpperCase() + '_ERROR';
-    
-    logger.warn(`Application error: ${err.message}`, { 
-      path: req.path, 
+
+    logger.warn(`Application error: ${err.message}`, {
+      path: req.path,
       method: req.method,
       statusCode,
       errorCode
@@ -99,22 +99,22 @@ function errorMiddleware(err, req, res, next) {
     statusCode = 503;
     errorMessage = 'Storage Service Unavailable';
     errorCode = 'STORAGE_ERROR';
-    
-    logger.error(`Storage error: ${err.message}`, { 
-      path: req.path, 
+
+    logger.error(`Storage error: ${err.message}`, {
+      path: req.path,
       method: req.method,
       error: err.stack
     });
   }
   // Handle unexpected errors
   else {
-    logger.error(`Unexpected error: ${err.message}`, { 
-      path: req.path, 
+    logger.error(`Unexpected error: ${err.message}`, {
+      path: req.path,
       method: req.method,
       error: err.stack
     });
   }
-  
+
   // Send standardized error response
   res.status(statusCode).json({
     success: false,
