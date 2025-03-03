@@ -28,12 +28,12 @@ class Logger {
 
     // Добавляем файловый транспорт в продакшн-режиме
     if (process.env.NODE_ENV === 'production') {
-      this.logger.add(new winston.transports.File({ 
-        filename: 'logs/error.log', 
-        level: 'error' 
+      this.logger.add(new winston.transports.File({
+        filename: 'logs/error.log',
+        level: 'error'
       }));
-      this.logger.add(new winston.transports.File({ 
-        filename: 'logs/combined.log' 
+      this.logger.add(new winston.transports.File({
+        filename: 'logs/combined.log'
       }));
     }
   }
@@ -86,3 +86,4 @@ module.exports = {
     debug: (message, meta) => loggerInstance.debug(message, meta)
   }
 };
+module.exports = Logger;
