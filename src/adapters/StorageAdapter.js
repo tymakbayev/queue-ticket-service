@@ -3,8 +3,8 @@
  * Абстракция для работы с хранилищем данных в микросервисе-талонизаторе
  */
 
-const { Logger } = require('../utils/Logger');
-const { ErrorHandler } = require('../utils/ErrorHandler');
+const Logger = require('../utils/Logger');
+const ErrorHandler = require('../utils/ErrorHandler');
 
 /**
  * Абстрактный класс адаптера хранилища
@@ -131,17 +131,17 @@ class RedisStorageAdapter extends StorageAdapter {
     try {
       // Динамический импорт для поддержки опционального использования Redis
       const { createClient } = await import('redis');
-      
+
       this.redis = createClient(this.options);
-      
+
       this.redis.on('error', (error) => {
         Logger.error('Redis connection error', { error: error.message });
       });
-      
+
       this.redis.on('connect', () => {
         Logger.info('Connected to Redis successfully');
       });
-      
+
       await this.redis.connect();
     } catch (error) {
       Logger.error('Failed to initialize Redis client', { error: error.message });
@@ -226,9 +226,4 @@ class StorageAdapterFactory {
   }
 }
 
-module.exports = {
-  StorageAdapter,
-  InMemoryStorageAdapter,
-  RedisStorageAdapter,
-  StorageAdapterFactory
-};
+module.exports = StorageAdapter,InMemoryStorageAdapter,RedisStorageAdapter,StorageAdapterFactory;
