@@ -3,7 +3,7 @@
  * Централизованная обработка ошибок для микросервиса-талонизатора
  */
 
-const { Logger } = require('./Logger');
+const Logger = require('./Logger');
 
 class AppError extends Error {
   constructor(message, statusCode = 500) {
@@ -35,7 +35,7 @@ class ErrorHandler {
   static handleError(error, req, res, next) {
     const statusCode = error.statusCode || 500;
     const message = error.message || 'Внутренняя ошибка сервера';
-    
+
     Logger.error(`[${statusCode}] ${message}`, {
       path: req.path,
       method: req.method,
@@ -63,4 +63,4 @@ class ErrorHandler {
   }
 }
 
-module.exports = { ErrorHandler, AppError };
+module.exports = ErrorHandler, AppError;
