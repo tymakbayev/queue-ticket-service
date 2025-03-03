@@ -3,7 +3,7 @@
  * Обеспечивает взаимодействие с Redis для хранения состояния очередей
  */
 
-const { createClient } = require('redis');
+const createClient = require('redis');
 
 class RedisStorageAdapter {
   /**
@@ -14,14 +14,14 @@ class RedisStorageAdapter {
    */
   constructor(options = {}) {
     const { url = 'redis://localhost:6379', connectTimeout = 5000 } = options;
-    
+
     this.client = createClient({
       url,
       socket: {
         connectTimeout
       }
     });
-    
+
     this.isConnected = false;
     this.connectionPromise = null;
   }
@@ -32,14 +32,14 @@ class RedisStorageAdapter {
    */
   async connect() {
     if (this.isConnected) return;
-    
+
     if (!this.connectionPromise) {
       this.connectionPromise = new Promise((resolve, reject) => {
         this.client.on('error', (err) => {
           console.error('Redis connection error:', err);
           reject(err);
         });
-        
+
         this.client.connect()
           .then(() => {
             this.isConnected = true;
@@ -49,7 +49,7 @@ class RedisStorageAdapter {
           .catch(reject);
       });
     }
-    
+
     return this.connectionPromise;
   }
 
@@ -83,13 +83,13 @@ class RedisStorageAdapter {
     try {
       await this.connect();
       const serializedValue = JSON.stringify(value);
-      
+
       if (options.ttl) {
         await this.client.setEx(key, options.ttl, serializedValue);
       } else {
         await this.client.set(key, serializedValue);
       }
-      
+
       return true;
     } catch (error) {
       console.error(`Error setting key ${key} in Redis:`, error);
