@@ -9,7 +9,9 @@ class InMemoryStorageAdapter {
   constructor() {
     this.storage = new Map();
   }
-
+  async connect() {
+    console.log("Connected to in-memory storage");
+  }
   /**
    * Получает значение по ключу
    * @param {string} key - Ключ для получения значения
