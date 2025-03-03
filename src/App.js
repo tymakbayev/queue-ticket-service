@@ -1,6 +1,5 @@
 const express = require('express');
 const http = require('http');
-const ErrorHandler = require('./utils/ErrorHandler');
 
 /**
  * Основной класс приложения, инициализирующий все компоненты
@@ -46,7 +45,7 @@ class App {
     this.app.use('/api', router);
 
     // Обработка ошибок
-    this.app.use(ErrorHandler.handleError);
+    this.app.use(this.errorHandler.middleware);
   }
 
   /**
