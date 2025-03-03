@@ -1,5 +1,6 @@
 const express = require('express');
 const http = require('http');
+const ErrorHandler = require('./utils/ErrorHandler');
 
 /**
  * Основной класс приложения, инициализирующий все компоненты
@@ -22,7 +23,7 @@ class App {
     this.queueService = queueService;
     this.queueRepository = queueRepository;
     this.storageAdapter = storageAdapter;
-    
+
     this.app = express();
     this.server = null;
   }
@@ -34,18 +35,18 @@ class App {
   async initialize() {
     // Инициализация хранилища
     await this.storageAdapter.connect();
-    
+
     // Настройка middleware
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
-    
+
     // Настройка маршрутов
     const router = express.Router();
     this.ticketController.registerRoutes(router);
     this.app.use('/api', router);
-    
+
     // Обработка ошибок
-    this.app.use(this.errorHandler.middleware);
+    this.app.use(ErrorHandler.handleError);
   }
 
   /**
@@ -55,10 +56,10 @@ class App {
   async start() {
     try {
       await this.initialize();
-      
+
       const port = this.config.port || 3000;
       this.server = http.createServer(this.app);
-      
+
       return new Promise((resolve) => {
         this.server.listen(port, () => {
           this.logger.info(`Ticket service started on port ${port}`);
